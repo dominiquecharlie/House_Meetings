@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seesterrrsss</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --butter: #F9F3E3;
+      --rose: #E8A598;
+      --rose-light: #F7E8E5;
+      --rose-dark: #C4705F;
+      --sage: #7FA688;
+      --sage-light: #E8F2EA;
+      --sage-dark: #4E7A5A;
+      --lavender: #A89BC2;
+      --lav-light: #EDE9F5;
+      --gold: #D4A843;
+      --gold-light: #FAF0D7;
+      --ink: #2A2520;
+      --mid: #6B6460;
+      --muted: #A09C98;
+      --border: #E8E2D8;
+      --white: #FFFDF9;
+      --r: 14px;
+      --r-sm: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--butter);
+      color: var(--ink);
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    .bg-shapes {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .shape {
+      position: absolute;
+      opacity: 0.15;
+    }
+
+    .shape-1 { width: 360px; height: 360px; background: var(--rose); top: -100px; left: -120px; border-radius: 50%; }
+    .shape-2 { width: 240px; height: 240px; background: var(--sage); bottom: 8%; right: -70px; border-radius: 50%; }
+    .shape-3 { width: 170px; height: 170px; background: var(--lavender); top: 38%; left: -50px; border-radius: 50%; }
+    .shape-4 { width: 130px; height: 130px; background: var(--gold); bottom: 28%; left: 12%; border-radius: 50%; }
+    .shape-5 { width: 100px; height: 100px; background: var(--rose); top: 62%; right: 6%; border-radius: 50%; opacity: 0.1; }
+    .shape-6 { width: 60px; height: 60px; background: var(--sage); top: 15%; right: 10%; border-radius: 50%; opacity: 0.12; }
+
+    .squig {
+      position: absolute;
+      opacity: 0.13;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 5rem;
+    }
+
+    .screen { display: none; }
+    .screen.active { display: block; }
+
+    /* Landing */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    .anim-1 { animation: fadeUp 0.55s 0.0s ease both; }
+    .anim-2 { animation: fadeUp 0.55s 0.12s ease both; }
+    .anim-3 { animation: fadeUp 0.55s 0.22s ease both; }
+    .anim-4 { animation: fadeUp 0.55s 0.32s ease both; }
+    .anim-5 { animation: fadeUp 0.55s 0.42s ease both; }
+    .anim-6 { animation: fadeUp 0.55s 0.52s ease both; }
+
+    .eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .landing-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3rem, 9vw, 5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.015em;
+    }
+
+    .landing-title em {
+      font-style: italic;
+      color: var(--rose-dark);
+    }
+
+    .emoji-bounce {
+      font-size: 1.9rem;
+      margin: 1rem 0 1.75rem;
+      animation: bounce 2.8s ease-in-out infinite;
+      display: block;
+    }
+
+    .intro-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 1.6rem 1.75rem;
+      margin-bottom: 1rem;
+      text-align: left;
+      border: 1.5px solid var(--border);
+    }
+
+    .intro-card h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .intro-card p {
+      font-size: 0.875rem;
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 1rem 0;
+    }
+
+    .step-pill {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 0.85rem 0.4rem;
+      text-align: center;
+    }
+
+    .step-pill .sicon { font-size: 1.35rem; margin-bottom: 5px; }
+    .step-pill .sname { font-size: 0.68rem; font-weight: 500; color: var(--ink); line-height: 1.3; }
+    .step-pill .snum { font-size: 0.6rem; color: var(--muted); margin-top: 2px; }
+
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold-light);
+      border: 1.5px solid #E8D4A0;
+      border-radius: 20px;
+      padding: 7px 16px;
+      font-size: 0.8rem;
+      color: #8A6820;
+      font-weight: 500;
+      margin: 0.75rem 0 1.25rem;
+    }
+
+    .submitted-section { margin-bottom: 1.5rem; }
+    .submitted-section h3 {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .person-pills { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
+
+    .person-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 40px;
+      padding: 6px 14px 6px 7px;
+    }
+
+    .person-pill .av {
+      width: 27px; height: 27px; border-radius: 50%;
+      background: var(--sage-light); border: 1.5px solid var(--sage);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 500; color: var(--sage-dark);
+    }
+
+    .person-pill .pname { font-size: 0.83rem; color: var(--ink); font-weight: 500; }
+
+    .landing-btns { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+
+    /* Buttons */
+    button {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 11px 24px;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.18s;
+      border: 1.5px solid var(--border);
+      background: var(--white);
+      color: var(--mid);
+    }
+
+    button:hover { border-color: var(--ink); color: var(--ink); transform: translateY(-1px); }
+
+    button.primary {
+      background: var(--ink); color: var(--butter);
+      border-color: var(--ink); padding: 13px 32px; font-size: 0.95rem;
+    }
+
+    button.primary:hover { background: #3D3730; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(42,37,32,0.16); }
+
+    button.primary-lg {
+      background: var(--ink); color: var(--butter);
+      border-color: var(--ink); padding: 15px 40px; font-size: 1.05rem;
+    }
+
+    button.primary-lg:hover { background: #3D3730; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(42,37,32,0.18); }
+
+    button.rose { background: var(--rose); color: var(--white); border-color: var(--rose); }
+    button.rose:hover { background: var(--rose-dark); border-color: var(--rose-dark); transform: translateY(-1px); }
+
+    button.sm { padding: 8px 16px; font-size: 0.78rem; }
+    button.danger { color: var(--rose-dark); border-color: #E8C5BC; }
+    button.danger:hover { background: var(--rose-light); }
+
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 1.75rem;
+      flex-wrap: wrap;
+    }
+
+    .skip-link {
+      font-size: 0.8rem; color: var(--muted); cursor: pointer;
+      text-decoration: underline; margin-top: 0.6rem; display: block;
+    }
+
+    /* Inner screens */
+    .screen-wrap { animation: fadeUp 0.4s ease both; }
+
+    .progress-dots {
+      display: flex; justify-content: center;
+      gap: 7px; margin-bottom: 1.25rem;
+    }
+
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--border); transition: all 0.2s;
+    }
+
+    .dot.active { background: var(--sage); transform: scale(1.35); }
+    .dot.done { background: var(--sage-dark); }
+
+    .screen-inner {
+      background: var(--white);
+      border-radius: 22px;
+      padding: 2rem 1.75rem 2.25rem;
+      border: 1.5px solid var(--border);
+      text-align: left;
+    }
+
+    .step-label {
+      font-size: 0.67rem; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--muted); margin-bottom: 0.85rem;
+    }
+
+    .screen-inner h2 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.55rem; font-weight: 400;
+      color: var(--ink); margin-bottom: 0.45rem; line-height: 1.2;
+    }
+
+    .subtitle {
+      font-size: 0.86rem; color: var(--mid);
+      line-height: 1.75; margin-bottom: 1.4rem;
+    }
+
+    .section-label {
+      font-size: 0.67rem; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--muted);
+      margin-bottom: 0.6rem; margin-top: 1.1rem;
+    }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 7px; }
+
+    .tag {
+      font-size: 0.78rem; padding: 6px 14px; border-radius: 20px;
+      border: 1.5px solid var(--border); background: var(--butter);
+      color: var(--mid); cursor: pointer; transition: all 0.15s;
+      user-select: none; font-family: 'DM Sans', sans-serif;
+    }
+
+    .tag:hover { border-color: var(--sage); color: var(--sage-dark); }
+    .tag.selected { background: var(--sage-light); border-color: var(--sage); color: var(--sage-dark); font-weight: 500; }
+
+    input[type="text"], textarea {
+      width: 100%; font-family: 'DM Sans', sans-serif;
+      font-size: 0.87rem; color: var(--ink); background: var(--butter);
+      border: 1.5px solid var(--border); border-radius: var(--r-sm);
+      padding: 10px 13px; transition: border-color 0.15s; outline: none;
+    }
+
+    input[type="text"]:focus, textarea:focus { border-color: var(--sage); background: var(--white); }
+    input[type="text"]::placeholder, textarea::placeholder { color: var(--muted); }
+    textarea { resize: vertical; min-height: 85px; line-height: 1.6; }
+
+    .inline-add { display: flex; gap: 8px; margin-top: 10px; }
+
+    /* Category blocks */
+    .cat-block {
+      border-radius: var(--r); padding: 1rem 1.2rem;
+      margin-bottom: 10px; border: 1.5px solid;
+    }
+
+    .cat-block .cat-title {
+      font-size: 0.73rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 8px;
+    }
+
+    .cat-block .cat-hint {
+      font-size: 0.75rem; margin-bottom: 8px; line-height: 1.5;
+    }
+
+    .cat-block.hl { background: var(--sage-light); border-color: #B8D8BE; }
+    .cat-block.hl .cat-title { color: var(--sage-dark); }
+    .cat-block.hl .cat-hint { color: var(--sage-dark); opacity: 0.75; }
+    .cat-block.hl textarea { background: rgba(255,255,255,0.65); }
+    .cat-block.hl textarea:focus { border-color: var(--sage); }
+
+    .cat-block.co { background: var(--lav-light); border-color: #C8BFE0; }
+    .cat-block.co .cat-title { color: #6B5F8A; }
+    .cat-block.co .cat-hint { color: #6B5F8A; opacity: 0.8; }
+    .cat-block.co textarea { background: rgba(255,255,255,0.65); }
+    .cat-block.co textarea:focus { border-color: var(--lavender); }
+
+    .cat-block.ag { background: var(--rose-light); border-color: #E8C5BC; }
+    .cat-block.ag .cat-title { color: var(--rose-dark); }
+    .cat-block.ag .cat-hint { color: var(--rose-dark); opacity: 0.8; }
+    .cat-block.ag textarea { background: rgba(255,255,255,0.65); }
+    .cat-block.ag textarea:focus { border-color: var(--rose); }
+
+    /* Name screen */
+    .name-input-big {
+      font-family: 'Fraunces', serif; font-size: 1.5rem;
+      font-weight: 300; text-align: center; padding: 14px 20px;
+      border-radius: var(--r); border: 2px solid var(--border);
+      background: var(--butter); width: 100%; outline: none;
+      color: var(--ink); transition: border-color 0.15s;
+    }
+
+    .name-input-big:focus { border-color: var(--rose); background: var(--white); }
+    .name-input-big::placeholder { color: var(--muted); font-style: italic; }
+
+    /* Submitted */
+    .success-blob {
+      width: 88px; height: 88px; background: var(--sage-light);
+      border: 2px solid var(--sage); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem; margin: 0 auto 1.4rem;
+    }
+
+    /* Report */
+    .report-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--r); padding: 1.2rem 1.4rem; margin-bottom: 1rem; text-align: left;
+    }
+
+    .report-card h3 {
+      font-size: 0.67rem; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.8rem;
+    }
+
+    .synthesis-text { font-size: 0.9rem; line-height: 1.8; color: var(--ink); }
+    .synthesis-text p { margin-bottom: 0.7rem; }
+    .synthesis-text p:last-child { margin-bottom: 0; }
+
+    .side-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(0,1fr)); gap: 9px; margin-top: 7px; }
+
+    .person-col {
+      border: 1.5px solid var(--border); border-radius: var(--r-sm);
+      padding: 9px 11px; background: var(--butter);
+    }
+
+    .person-col-name {
+      font-size: 0.63rem; text-transform: uppercase;
+      letter-spacing: 0.09em; color: var(--muted); margin-bottom: 5px; font-weight: 500;
+    }
+
+    .person-col p { font-size: 0.8rem; color: var(--ink); line-height: 1.6; }
+    .tags-line { font-size: 0.68rem; color: var(--muted); margin-bottom: 3px; }
+
+    .report-cat-label { font-size: 0.8rem; font-weight: 500; color: var(--mid); margin: 1rem 0 5px; }
+
+    .loading-msg { font-size: 0.87rem; color: var(--muted); padding: 1rem 0; text-align: center; }
+    .empty-state { font-size: 0.87rem; color: var(--muted); padding: 0.5rem 0; text-align: center; }
+
+    @media (max-width: 500px) {
+      .steps-row { grid-template-columns: repeat(2, 1fr); }
+      .screen-inner { padding: 1.5rem 1.25rem 2rem; }
+      .container { padding: 1.75rem 1rem 4rem; }
+      .landing-title { font-size: 2.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-shapes">
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+  <div class="shape shape-3"></div>
+  <div class="shape shape-4"></div>
+  <div class="shape shape-5"></div>
+  <div class="shape shape-6"></div>
+  <svg class="squig" style="top:18%;right:4%;width:80px;" viewBox="0 0 80 40" fill="none">
+    <path d="M5 20 Q20 5 35 20 Q50 35 65 20 Q75 10 78 15" stroke="#A89BC2" stroke-width="3" stroke-linecap="round" fill="none"/>
+  </svg>
+  <svg class="squig" style="bottom:14%;left:4%;width:62px;" viewBox="0 0 60 30" fill="none">
+    <path d="M5 15 Q15 5 25 15 Q35 25 45 15 Q52 8 58 12" stroke="#7FA688" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  </svg>
+  <svg class="squig" style="top:7%;right:18%;width:48px;opacity:0.14;" viewBox="0 0 50 50" fill="none">
+    <circle cx="25" cy="25" r="20" stroke="#E8A598" stroke-width="2.5" stroke-dasharray="6 5" fill="none"/>
+  </svg>
+  <svg class="squig" style="bottom:40%;right:2%;width:40px;opacity:0.12;" viewBox="0 0 40 40" fill="none">
+    <rect x="5" y="5" width="30" height="30" rx="8" stroke="#D4A843" stroke-width="2.5" fill="none"/>
+  </svg>
+</div>
+
+<div class="container">
+
+  <!-- Landing -->
+  <div class="screen active" id="screen-landing">
+    <p class="eyebrow anim-1">House meeting &middot; first one!</p>
+    <h1 class="landing-title anim-1">Seester<em>rrsss</em></h1>
+    <span class="emoji-bounce anim-2">🏠✨🐾</span>
+
+    <div class="intro-card anim-2">
+      <h2>What is this?</h2>
+      <p>This is our shared space to reflect <em>before</em> we all sit down together. Take a few minutes here to share what's been great, what's worth a conversation, and what we're hoping for. Then we look at it all together.</p>
+    </div>
+
+    <div class="intro-card anim-3">
+      <h2>How it works</h2>
+      <p>Each of us fills this out on our own device, in our own time. When we're all done, we open the report together and let it guide the meeting. The AI will write a warm synthesis of all our responses, plus we'll see a side-by-side of what each person said.</p>
+    </div>
+
+    <div class="steps-row anim-4">
+      <div class="step-pill">
+        <div class="sicon">👤</div>
+        <div class="sname">Your name</div>
+        <div class="snum">step 1</div>
+      </div>
+      <div class="step-pill">
+        <div class="sicon">🌟</div>
+        <div class="sname">Highlights</div>
+        <div class="snum">step 2</div>
+      </div>
+      <div class="step-pill">
+        <div class="sicon">💬</div>
+        <div class="sname">Considerations</div>
+        <div class="snum">step 3</div>
+      </div>
+      <div class="step-pill">
+        <div class="sicon">🌱</div>
+        <div class="sname">Hopes</div>
+        <div class="snum">step 4</div>
+      </div>
+    </div>
+
+    <div class="anim-4" style="display:flex;justify-content:center;">
+      <div class="time-badge">⏱ About 10&ndash;15 minutes</div>
+    </div>
+
+    <div class="submitted-section anim-5">
+      <h3 id="submitted-count-label">Checking who's submitted...</h3>
+      <div class="person-pills" id="landing-submissions"></div>
+    </div>
+
+    <div class="landing-btns anim-6">
+      <button class="primary-lg" onclick="goTo('screen-name')">Start my reflection &rarr;</button>
+      <button onclick="loadAndGoReport()">View the report</button>
+    </div>
+  </div>
+
+  <!-- Name -->
+  <div class="screen" id="screen-name">
+    <div class="screen-wrap">
+      <div class="progress-dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="screen-inner">
+        <p class="step-label">Step 1 of 4</p>
+        <h2>Who's here? 👋</h2>
+        <p class="subtitle">Your name is totally optional. Skip it and you'll show up as "Anonymous" in the report.</p>
+        <input class="name-input-big" type="text" id="name-input" placeholder="your name..." maxlength="40" />
+        <div class="btn-row">
+          <button onclick="goTo('screen-landing')">Back</button>
+          <button class="primary" onclick="saveName()">Continue</button>
+        </div>
+        <span class="skip-link" onclick="skipName()">Skip &mdash; stay anonymous</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Highlights -->
+  <div class="screen" id="screen-highlights">
+    <div class="screen-wrap">
+      <div class="progress-dots">
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="screen-inner">
+        <p class="step-label">Step 2 of 4</p>
+        <h2>Highlights 🌟</h2>
+        <p class="subtitle">What's been working well this first month? Pick the categories that feel relevant, then share your thoughts on each one.</p>
+        <div class="section-label">Select any that apply</div>
+        <div class="tag-row" id="highlight-tags"></div>
+        <div class="inline-add">
+          <input type="text" id="new-highlight-cat-input" placeholder="Add your own category..." maxlength="40" />
+          <button class="sm" onclick="addHighlightCategory()">Add</button>
+        </div>
+        <div id="highlight-blocks" style="margin-top:1.2rem;"></div>
+        <div class="btn-row">
+          <button onclick="goTo('screen-name')">Back</button>
+          <button class="primary" onclick="goTo('screen-considerations')">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Considerations -->
+  <div class="screen" id="screen-considerations">
+    <div class="screen-wrap">
+      <div class="progress-dots">
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+      </div>
+      <div class="screen-inner">
+        <p class="step-label">Step 3 of 4</p>
+        <h2>Considerations 💬</h2>
+        <p class="subtitle">What would you like to talk through as a house? These aren't complaints &mdash; just topics worth holding together. Pick what feels relevant and share your thoughts on each one.</p>
+        <div class="section-label">Select any that apply</div>
+        <div class="tag-row" id="consideration-tags"></div>
+        <div class="inline-add">
+          <input type="text" id="new-cat-input" placeholder="Add your own category..." maxlength="40" />
+          <button class="sm" onclick="addCustomCategory()">Add</button>
+        </div>
+        <div id="consideration-blocks" style="margin-top:1.2rem;"></div>
+        <div class="btn-row">
+          <button onclick="goTo('screen-highlights')">Back</button>
+          <button class="primary" onclick="goTo('screen-agreements')">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agreements -->
+  <div class="screen" id="screen-agreements">
+    <div class="screen-wrap">
+      <div class="progress-dots">
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot done"></div>
+        <div class="dot active"></div>
+      </div>
+      <div class="screen-inner">
+        <p class="step-label">Step 4 of 4</p>
+        <h2>Agreements & hopes 🌱</h2>
+        <p class="subtitle">For each consideration you raised, imagine what it would look like if things were going really well. What would you hope for?</p>
+        <div id="agreement-blocks"></div>
+        <div class="btn-row">
+          <button onclick="goTo('screen-considerations')">Back</button>
+          <button class="rose" onclick="submitResponse()">Submit my reflection ✨</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submitted -->
+  <div class="screen" id="screen-submitted">
+    <div class="screen-wrap">
+      <div class="screen-inner" style="text-align:center;">
+        <div class="success-blob">🎉</div>
+        <h2 style="text-align:center;">You're in!</h2>
+        <p class="subtitle" id="submitted-msg" style="text-align:center;margin-top:0.5rem;">Your reflection has been saved.</p>
+        <div class="btn-row" style="justify-content:center;">
+          <button class="primary" onclick="resetForm(); goTo('screen-landing'); refreshLanding();">Back to start</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report -->
+  <div class="screen" id="screen-report">
+    <div class="screen-wrap">
+      <div class="screen-inner">
+        <h2>House meeting report 📋</h2>
+        <p class="subtitle" id="report-subtitle" style="margin-top:0.35rem;"></p>
+        <div id="report-loading" class="loading-msg" style="display:none;">Synthesizing your reflections... ✨</div>
+        <div id="report-content"></div>
+        <div class="btn-row">
+          <button onclick="goTo('screen-landing'); refreshLanding();">Back to start</button>
+          <button class="danger" onclick="confirmReset()">Reset all responses</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAqiX-OrJzHRQwophFUb95rJs8iIGiyMrQ",
+    authDomain: "house-meetings.firebaseapp.com",
+    projectId: "house-meetings",
+    storageBucket: "house-meetings.firebasestorage.app",
+    messagingSenderId: "990460438853",
+    appId: "1:990460438853:web:1a3547795a72aa0ac1f62c"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window._db = db;
+  window._col = (name) => collection(db, name);
+  window._addDoc = addDoc;
+  window._getDocs = getDocs;
+  window._deleteDoc = deleteDoc;
+  window._docRef = (name, id) => doc(db, name, id);
+  window._firebaseReady = true;
+  window.dispatchEvent(new Event('firebaseReady'));
+</script>
+
+<script>
+  const HIGHLIGHT_TAGS = [
+    'shared spaces', 'morning rhythms', 'communication', 'grocery + food',
+    'respecting quiet', 'guests & visitors', 'emotional support',
+    'shared chores', 'respecting schedules', 'dogs'
+  ];
+  const CONSIDERATION_TAGS = [
+    'shared spaces', 'chores & cleaning', 'grocery + food', 'noise & quiet hours',
+    'guests & visitors', 'finances & shared costs', 'communication styles',
+    'alone time & privacy', 'temperature & comfort', 'dogs'
+  ];
+  const COLLECTION = 'submissions';
+
+  let state = {
+    currentPerson: { name: '', highlights: { tags: [], notes: {} }, considerations: {}, agreements: {} },
+    selectedHighlightCats: [],
+    customHighlightCats: [],
+    selectedConsiderationCats: [],
+    customConsiderationCats: [],
+    submissions: []
+  };
+
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (id === 'screen-highlights') renderHighlightTags();
+    if (id === 'screen-considerations') renderConsiderationTags();
+    if (id === 'screen-agreements') renderAgreementBlocks();
+  }
+
+  function saveName() {
+    state.currentPerson.name = document.getElementById('name-input').value.trim() || 'Anonymous';
+    goTo('screen-highlights');
+  }
+
+  function skipName() {
+    state.currentPerson.name = 'Anonymous';
+    goTo('screen-highlights');
+  }
+
+  // Highlights
+  function renderHighlightTags() {
+    const allCats = [...HIGHLIGHT_TAGS, ...state.customHighlightCats];
+    const row = document.getElementById('highlight-tags');
+    row.innerHTML = '';
+    allCats.forEach(tag => {
+      const el = document.createElement('span');
+      el.className = 'tag' + (state.selectedHighlightCats.includes(tag) ? ' selected' : '');
+      el.textContent = tag;
+      el.onclick = () => toggleHighlightCat(tag);
+      row.appendChild(el);
+    });
+    renderHighlightBlocks();
+  }
+
+  function toggleHighlightCat(tag) {
+    const idx = state.selectedHighlightCats.indexOf(tag);
+    if (idx > -1) {
+      state.selectedHighlightCats.splice(idx, 1);
+      delete state.currentPerson.highlights.notes[tag];
+    } else {
+      state.selectedHighlightCats.push(tag);
+      if (!state.currentPerson.highlights.notes[tag]) state.currentPerson.highlights.notes[tag] = '';
+    }
+    renderHighlightTags();
+  }
+
+  function renderHighlightBlocks() {
+    const container = document.getElementById('highlight-blocks');
+    const saved = Array.from(container.querySelectorAll('textarea')).reduce((acc, ta) => {
+      if (ta.dataset.cat) acc[ta.dataset.cat] = ta.value;
+      return acc;
+    }, {});
+    container.innerHTML = '';
+    state.selectedHighlightCats.forEach(cat => {
+      if (saved[cat] !== undefined) state.currentPerson.highlights.notes[cat] = saved[cat];
+      const block = document.createElement('div');
+      block.className = 'cat-block hl';
+      const title = document.createElement('div');
+      title.className = 'cat-title';
+      title.textContent = cat;
+      const ta = document.createElement('textarea');
+      ta.dataset.cat = cat;
+      ta.placeholder = `What's been good about ${cat}?`;
+      ta.value = state.currentPerson.highlights.notes[cat] || '';
+      ta.oninput = () => { state.currentPerson.highlights.notes[cat] = ta.value; };
+      block.appendChild(title);
+      block.appendChild(ta);
+      container.appendChild(block);
+    });
+  }
+
+  function addHighlightCategory() {
+    const input = document.getElementById('new-highlight-cat-input');
+    const val = input.value.trim();
+    if (!val) return;
+    if (!state.customHighlightCats.includes(val) && !HIGHLIGHT_TAGS.includes(val)) state.customHighlightCats.push(val);
+    if (!state.selectedHighlightCats.includes(val)) {
+      state.selectedHighlightCats.push(val);
+      state.currentPerson.highlights.notes[val] = '';
+    }
+    input.value = '';
+    renderHighlightTags();
+  }
+
+  // Considerations
+  function renderConsiderationTags() {
+    const allCats = [...CONSIDERATION_TAGS, ...state.customConsiderationCats];
+    const row = document.getElementById('consideration-tags');
+    row.innerHTML = '';
+    allCats.forEach(tag => {
+      const el = document.createElement('span');
+      el.className = 'tag' + (state.selectedConsiderationCats.includes(tag) ? ' selected' : '');
+      el.textContent = tag;
+      el.onclick = () => toggleConsiderationCat(tag);
+      row.appendChild(el);
+    });
+    renderConsiderationBlocks();
+  }
+
+  function toggleConsiderationCat(tag) {
+    const idx = state.selectedConsiderationCats.indexOf(tag);
+    if (idx > -1) {
+      state.selectedConsiderationCats.splice(idx, 1);
+      delete state.currentPerson.considerations[tag];
+      delete state.currentPerson.agreements[tag];
+    } else {
+      state.selectedConsiderationCats.push(tag);
+      state.currentPerson.considerations[tag] = '';
+      state.currentPerson.agreements[tag] = '';
+    }
+    renderConsiderationTags();
+  }
+
+  function renderConsiderationBlocks() {
+    const container = document.getElementById('consideration-blocks');
+    const saved = Array.from(container.querySelectorAll('textarea')).reduce((acc, ta) => {
+      if (ta.dataset.cat) acc[ta.dataset.cat] = ta.value;
+      return acc;
+    }, {});
+    container.innerHTML = '';
+    state.selectedConsiderationCats.forEach(cat => {
+      if (saved[cat] !== undefined) state.currentPerson.considerations[cat] = saved[cat];
+      const block = document.createElement('div');
+      block.className = 'cat-block co';
+      const title = document.createElement('div');
+      title.className = 'cat-title';
+      title.textContent = cat;
+      const ta = document.createElement('textarea');
+      ta.dataset.cat = cat;
+      ta.placeholder = `What's on your mind about ${cat}?`;
+      ta.value = state.currentPerson.considerations[cat] || '';
+      ta.oninput = () => { state.currentPerson.considerations[cat] = ta.value; };
+      block.appendChild(title);
+      block.appendChild(ta);
+      container.appendChild(block);
+    });
+  }
+
+  function addCustomCategory() {
+    const input = document.getElementById('new-cat-input');
+    const val = input.value.trim();
+    if (!val) return;
+    if (!state.customConsiderationCats.includes(val) && !CONSIDERATION_TAGS.includes(val)) state.customConsiderationCats.push(val);
+    if (!state.selectedConsiderationCats.includes(val)) {
+      state.selectedConsiderationCats.push(val);
+      state.currentPerson.considerations[val] = '';
+      state.currentPerson.agreements[val] = '';
+    }
+    input.value = '';
+    renderConsiderationTags();
+  }
+
+  // Agreements
+  function renderAgreementBlocks() {
+    document.querySelectorAll('#consideration-blocks textarea').forEach(ta => {
+      if (ta.dataset.cat) state.currentPerson.considerations[ta.dataset.cat] = ta.value;
+    });
+    const container = document.getElementById('agreement-blocks');
+    container.innerHTML = '';
+    if (state.selectedConsiderationCats.length === 0) {
+      container.innerHTML = '<p class="empty-state" style="padding:1rem 0;">You didn\'t select any considerations. Go back and pick at least one topic.</p>';
+      return;
+    }
+    state.selectedConsiderationCats.forEach(cat => {
+      const block = document.createElement('div');
+      block.className = 'cat-block ag';
+      const title = document.createElement('div');
+      title.className = 'cat-title';
+      title.textContent = cat;
+      block.appendChild(title);
+      const noteText = state.currentPerson.considerations[cat];
+      if (noteText) {
+        const hint = document.createElement('div');
+        hint.className = 'cat-hint';
+        hint.textContent = `You shared: "${noteText.slice(0, 90)}${noteText.length > 90 ? '...' : ''}"`;
+        block.appendChild(hint);
+      }
+      const ta = document.createElement('textarea');
+      ta.dataset.cat = cat;
+      ta.placeholder = `If this were going well, I'd imagine...`;
+      ta.value = state.currentPerson.agreements[cat] || '';
+      ta.oninput = () => { state.currentPerson.agreements[cat] = ta.value; };
+      block.appendChild(ta);
+      container.appendChild(block);
+    });
+  }
+
+  // Submit
+  async function submitResponse() {
+    document.querySelectorAll('#agreement-blocks textarea').forEach(ta => {
+      if (ta.dataset.cat) state.currentPerson.agreements[ta.dataset.cat] = ta.value;
+    });
+    document.querySelectorAll('#highlight-blocks textarea').forEach(ta => {
+      if (ta.dataset.cat) state.currentPerson.highlights.notes[ta.dataset.cat] = ta.value;
+    });
+
+    const submission = {
+      name: state.currentPerson.name,
+      highlights: { tags: [...state.selectedHighlightCats], notes: { ...state.currentPerson.highlights.notes } },
+      considerations: { ...state.currentPerson.considerations },
+      agreements: { ...state.currentPerson.agreements },
+      timestamp: Date.now()
+    };
+
+    try {
+      await window._addDoc(window._col(COLLECTION), submission);
+      state.submissions.push(submission);
+      const name = submission.name === 'Anonymous' ? 'Your reflection' : `${submission.name}'s reflection`;
+      const remaining = Math.max(0, 3 - state.submissions.length);
+      document.getElementById('submitted-msg').textContent =
+        `${name} has been saved! ${remaining > 0 ? `Waiting for ${remaining} more sister${remaining !== 1 ? 's' : ''}.` : 'All three are in — time to meet! 🎉'}`;
+      goTo('screen-submitted');
+    } catch(e) {
+      alert('Something went wrong. Check your connection and try again.');
+      console.error(e);
+    }
+  }
+
+  function resetForm() {
+    state.currentPerson = { name: '', highlights: { tags: [], notes: {} }, considerations: {}, agreements: {} };
+    state.selectedHighlightCats = [];
+    state.customHighlightCats = [];
+    state.selectedConsiderationCats = [];
+    state.customConsiderationCats = [];
+    document.getElementById('name-input').value = '';
+    document.getElementById('highlight-blocks').innerHTML = '';
+    document.getElementById('consideration-blocks').innerHTML = '';
+    document.getElementById('agreement-blocks').innerHTML = '';
+  }
+
+  // Firebase
+  async function loadSubmissions() {
+    try {
+      const snap = await window._getDocs(window._col(COLLECTION));
+      state.submissions = [];
+      snap.forEach(d => state.submissions.push({ id: d.id, ...d.data() }));
+      state.submissions.sort((a, b) => a.timestamp - b.timestamp);
+    } catch(e) { console.error('Load error:', e); }
+  }
+
+  async function refreshLanding() {
+    await loadSubmissions();
+    renderLandingSubmissions();
+  }
+
+  function renderLandingSubmissions() {
+    const pills = document.getElementById('landing-submissions');
+    const label = document.getElementById('submitted-count-label');
+    if (state.submissions.length === 0) {
+      pills.innerHTML = '';
+      label.textContent = 'No reflections yet — be the first!';
+      return;
+    }
+    label.textContent = `${state.submissions.length} of 3 submitted`;
+    pills.innerHTML = state.submissions.map(s =>
+      `<div class="person-pill">
+        <div class="av">${(s.name[0]||'?').toUpperCase()}</div>
+        <span class="pname">${s.name}</span>
+        <span style="font-size:0.85rem;">✅</span>
+      </div>`
+    ).join('');
+  }
+
+  async function loadAndGoReport() {
+    goTo('screen-report');
+    document.getElementById('report-loading').style.display = 'none';
+    document.getElementById('report-content').innerHTML = '';
+    document.getElementById('report-subtitle').textContent = 'Loading...';
+    await loadSubmissions();
+    if (state.submissions.length === 0) {
+      document.getElementById('report-subtitle').textContent = '';
+      document.getElementById('report-content').innerHTML = '<p class="empty-state">No reflections yet. Come back once at least one of us has submitted.</p>';
+      return;
+    }
+    document.getElementById('report-subtitle').textContent = `From ${state.submissions.length} reflection${state.submissions.length !== 1 ? 's' : ''}`;
+    document.getElementById('report-loading').style.display = 'block';
+    await generateReport();
+  }
+
+  async function generateReport() {
+    const data = state.submissions.map(s => ({
+      name: s.name,
+      highlights: { categories: s.highlights?.tags || [], notes: s.highlights?.notes || {} },
+      considerations: s.considerations || {},
+      agreements: s.agreements || {}
+    }));
+
+    const prompt = `You are helping three sisters synthesize pre-meeting reflections for their first household meeting. Your tone should be warm, honest, and a little playful — like a caring friend, not a corporate facilitator. Write in plain prose paragraphs — no bullet points, no lists, no headers.
+
+Here are the reflections:
+${JSON.stringify(data, null, 2)}
+
+Write a synthesis with four short paragraphs:
+1. Overall mood and themes (2-3 sentences, warm and observational).
+2. Highlights: what's been good, what people want to protect and celebrate (2-3 sentences).
+3. Considerations: for each topic raised, summarize what people shared, note any overlap or gentle tension. Keep it constructive and kind.
+4. Agreements and hopes: what each person imagined it would look like for their considerations to be met (2-3 sentences).
+
+Aim for about 200-250 words. Warm, readable, useful as an opening for their meeting.`;
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          messages: [{ role: 'user', content: prompt }]
+        })
+      });
+      const json = await res.json();
+      const summary = json.content?.find(b => b.type === 'text')?.text || '';
+      document.getElementById('report-loading').style.display = 'none';
+      renderReport(summary);
+    } catch(e) {
+      document.getElementById('report-loading').style.display = 'none';
+      renderReport(null);
+    }
+  }
+
+  function renderReport(summary) {
+    const el = document.getElementById('report-content');
+    let html = '';
+
+    if (summary) {
+      const paras = summary.split(/\n\n+/).filter(p => p.trim());
+      html += `<div class="report-card"><h3>Synthesis ✨</h3><div class="synthesis-text">${paras.map(p => `<p>${p.trim()}</p>`).join('')}</div></div>`;
+    }
+
+    const allHCats = [...new Set(state.submissions.flatMap(s => s.highlights?.tags || []))];
+    if (allHCats.length > 0) {
+      html += `<div class="report-card"><h3>Highlights 🌟</h3>`;
+      allHCats.forEach(cat => {
+        html += `<p class="report-cat-label">${cat}</p><div class="side-grid">`;
+        state.submissions.forEach(s => {
+          const note = s.highlights?.notes?.[cat];
+          html += `<div class="person-col"><div class="person-col-name">${s.name}</div><p>${note || '<em style="color:#ccc;">No note</em>'}</p></div>`;
+        });
+        html += `</div>`;
+      });
+      html += `</div>`;
+    }
+
+    const allCats = [...new Set(state.submissions.flatMap(s => Object.keys(s.considerations || {})))];
+    if (allCats.length > 0) {
+      html += `<div class="report-card"><h3>Considerations 💬</h3>`;
+      allCats.forEach(cat => {
+        html += `<p class="report-cat-label">${cat}</p><div class="side-grid">`;
+        state.submissions.forEach(s => {
+          const note = s.considerations?.[cat];
+          html += `<div class="person-col"><div class="person-col-name">${s.name}</div><p>${note || '<em style="color:#ccc;">Not raised</em>'}</p></div>`;
+        });
+        html += `</div>`;
+      });
+      html += `</div>`;
+
+      html += `<div class="report-card"><h3>Agreements & hopes 🌱</h3>`;
+      allCats.forEach(cat => {
+        html += `<p class="report-cat-label">${cat}</p><div class="side-grid">`;
+        state.submissions.forEach(s => {
+          const hope = s.agreements?.[cat];
+          html += `<div class="person-col"><div class="person-col-name">${s.name}</div><p>${hope || '<em style="color:#ccc;">No response</em>'}</p></div>`;
+        });
+        html += `</div>`;
+      });
+      html += `</div>`;
+    }
+
+    el.innerHTML = html;
+  }
+
+  async function confirmReset() {
+    if (!confirm('This will permanently delete all submitted reflections. Are you sure?')) return;
+    try {
+      const snap = await window._getDocs(window._col(COLLECTION));
+      const deletes = [];
+      snap.forEach(d => deletes.push(window._deleteDoc(window._docRef(COLLECTION, d.id))));
+      await Promise.all(deletes);
+      state.submissions = [];
+      goTo('screen-landing');
+      renderLandingSubmissions();
+    } catch(e) {
+      alert('Could not reset. Check your connection and try again.');
+      console.error(e);
+    }
+  }
+
+  window.goTo = goTo;
+  window.saveName = saveName;
+  window.skipName = skipName;
+  window.addHighlightCategory = addHighlightCategory;
+  window.addCustomCategory = addCustomCategory;
+  window.submitResponse = submitResponse;
+  window.loadAndGoReport = loadAndGoReport;
+  window.resetForm = resetForm;
+  window.refreshLanding = refreshLanding;
+  window.confirmReset = confirmReset;
+
+  window.addEventListener('firebaseReady', async () => {
+    await loadSubmissions();
+    renderLandingSubmissions();
+  });
+</script>
+</body>
+</html>
